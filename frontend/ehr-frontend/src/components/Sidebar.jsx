@@ -3,67 +3,82 @@ import {
   FaChartPie,
   FaPlusCircle,
   FaFolderOpen,
-  FaShieldAlt
+  FaShieldAlt,
+  FaUserPlus,
+  FaCubes
 } from "react-icons/fa";
+import ThemeToggle from "./ThemeToggle";
+
+const navLinks = [
+  { to: "/dashboard",   icon: <FaChartPie />,    label: "Dashboard" },
+  { to: "/records",     icon: <FaFolderOpen />,  label: "View Records" },
+  { to: "/add",         icon: <FaPlusCircle />,  label: "Add Record" },
+  { to: "/add-patient", icon: <FaUserPlus />,    label: "Patients" },
+  { to: "/verify",      icon: <FaShieldAlt />,   label: "Verify Integrity" },
+  { to: "/blockchain",  icon: <FaCubes />,       label: "Blockchain Log" },
+];
 
 function Sidebar() {
-
   const location = useLocation();
 
-  const linkStyle = (path) =>
-    `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
-    ${
-      location.pathname === path
-        ? "bg-blue-600 shadow-md"
-        : "hover:bg-gray-700 hover:translate-x-1"
-    }`;
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <div className="w-64 bg-gradient-to-b from-gray-900 to-gray-800 text-white h-screen flex flex-col justify-between p-6 shadow-xl">
+    <div className="w-64 bg-[color:var(--bg-sidebar)] text-white h-screen flex flex-col justify-between p-6 shadow-xl sticky top-0 border-r border-[color:var(--border-color)]">
 
-      {/* Logo / Title */}
+      {/* Logo */}
       <div>
-        <h2 className="text-2xl font-bold mb-10 tracking-wide">
-          Secure EHR
-        </h2>
+        <div className="mb-10">
+          <h2 className="text-xl font-bold tracking-wide text-white">Secure EHR</h2>
+          <p className="text-xs text-[color:var(--text-muted)] mt-1">Blockchain-powered Health Records</p>
+        </div>
 
-        <nav className="flex flex-col gap-3">
+        <nav className="flex flex-col gap-1">
+          {navLinks.map(({ to, icon, label }) => (
+            <Link
+              key={to}
+              to={to}
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200
+                ${isActive(to)
+                  ? "bg-[color:var(--accent-primary)] text-white shadow-md"
+                  : "text-[color:var(--text-secondary)] hover:bg-[color:var(--bg-card)] hover:text-white hover:translate-x-1"}`}
+            >
+              <span className="text-base flex-shrink-0">{icon}</span>
+              {label}
+            </Link>
+          ))}
 
-          <Link to="/" className={linkStyle("/")}>
-            <FaChartPie />
-            Dashboard
-          </Link>
-
-          <Link to="/add" className={linkStyle("/add")}>
-            <FaPlusCircle />
-            Add Record
-          </Link>
-
-          <Link to="/records" className={linkStyle("/records")}>
-            <FaFolderOpen />
-            View Records
-          </Link>
-
-          <Link to="/verify" className={linkStyle("/verify")}>
-            <FaShieldAlt />
-            Verify Integrity
-          </Link>
-
-          <Link to="/add-patient" className={linkStyle("/add-patient")}>
-            Add Patient
-          </Link>
-
+          {/* Explicit Logout Execution */}
+          <button
+              onClick={() => {
+                localStorage.removeItem('ehr-role');
+                localStorage.removeItem('ehr-username');
+                window.location.href = '/login';
+              }}
+              className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 mt-4 text-red-400 hover:bg-[color:var(--bg-card)] hover:text-red-300 w-full text-left"
+          >
+             <span className="text-base flex-shrink-0">⏏️</span>
+             Logout
+          </button>
         </nav>
       </div>
 
-      {/* Footer */}
-      <div className="text-sm text-gray-400 border-t border-gray-700 pt-4">
-        <p>Blockchain Status</p>
-        <p className="text-green-400 font-semibold">
-          ● Connected
-        </p>
-      </div>
+      {/* Theme & Footer Stack */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between bg-[color:var(--bg-card)] p-3 rounded-xl border border-[color:var(--border-color)]">
+          <span className="text-xs font-semibold text-[color:var(--text-primary)]">Theme</span>
+          <ThemeToggle />
+        </div>
 
+        <div className="text-xs text-[color:var(--text-muted)] border-t border-[color:var(--border-color)] pt-4 space-y-1">
+          <p className="font-semibold text-[color:var(--text-secondary)]">Blockchain Status</p>
+          <p className="text-green-400 font-bold flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full bg-green-400 inline-block animate-pulse"></span>
+            Connected
+          </p>
+          <p className="text-[color:var(--text-muted)] mt-2 opacity-50">ehr_system • MySQL 8.0</p>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,3 +1,147 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* === EHR Chain Theme Variables === */
+:root {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-sidebar: #0f172a; /* Dark sidebar in light mode for consistency */
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  
+  --accent-primary: #2563eb;
+  --accent-secondary: #7c3aed;
+  --border-color: #e2e8f0;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+  --gradient-start: #eff6ff;
+  --gradient-end: #faf5ff;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #020617;
+  --bg-secondary: #0f172a;
+  --bg-card: #1e293b;
+  --bg-sidebar: #020617;
+  
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  
+  --accent-primary: #3b82f6;
+  --accent-secondary: #a78bfa;
+  --border-color: #334155;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --gradient-start: #020617;
+  --gradient-end: #0f172a;
+}
+
+/* Apply variables globally */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: none; /* GSAP handles transition */
+}
+
+.card, .feature-card, .auth-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 24px var(--shadow-color);
+}
+/* ============================================
+   GLOBAL UTILITY CLASSES
+   ============================================ */
+
+/* Alert / notification boxes */
+.alert-error {
+  background-color: #fdecea;
+  color: #c0392b;
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.alert-success {
+  background-color: #eafaf1;
+  color: #1e8449;
+  border: 1px solid #27ae60;
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Loading spinner */
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(0, 0, 0, 0.15);
+  border-top-color: #4a90e2;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Empty state message */
+.empty-state {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+  padding: 32px 0;
+  font-style: italic;
+}
+
+/* Responsive table wrapper */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Focus ring for inputs (supplements Tailwind) */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+}
+
+/* Smooth page transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 8px 10px;
+  }
+}

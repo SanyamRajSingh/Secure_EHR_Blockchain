@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-
+import { getDashboard } from "../api";
 import StatsCards from "../components/dashboard/StatsCards";
 import RecordGrowthChart from "../components/dashboard/RecordGrowthChart";
 import BlockchainActivity from "../components/dashboard/BlockchainActivity";
@@ -8,56 +7,62 @@ import BlockchainNetworkGraph from "../components/blockchain/BlockchainNetworkGr
 import LiveTransactionFeed from "../components/blockchain/LiveTransactionFeed";
 
 function Dashboard() {
-
-  const [patients, setPatients] = useState(0);
+  const [stats, setStats]     = useState({ patients: 0, records: 0, doctors: 0 });
   const [records, setRecords] = useState([]);
+  const [error, setError]     = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadDashboard();
   }, []);
 
   const loadDashboard = async () => {
-
+    setLoading(true);
+    setError("");
     try {
-
-      const res = await axios.get(
-        "http://127.0.0.1:5000/dashboard"
-      );
-
-      setPatients(res.data.total_patients);
-      setRecords(res.data.latest_records);
-
-    } catch (error) {
-
-      console.error(error);
-
+      const res = await getDashboard();
+      const d = res.data.data;
+      setStats({
+        patients: d.total_patients,
+        records:  d.total_records,
+        doctors:  d.total_doctors,
+      });
+      setRecords(d.latest_records || []);
+    } catch (err) {
+      setError("Failed to load dashboard data. Is the backend running?");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
-
   };
 
   return (
+    <div className="p-10 bg-[color:var(--bg-secondary)] min-h-screen">
+      <h1 className="text-4xl font-bold mb-2 text-[color:var(--text-primary)]">Secure EHR Dashboard</h1>
+      <p className="text-[color:var(--text-secondary)] mb-8">Blockchain-secured Electronic Health Records</p>
 
-    <div className="p-10 bg-gray-100 min-h-screen">
+      {error && (
+        <div className="alert-error mb-6">{error}</div>
+      )}
 
-      <h1 className="text-4xl font-bold mb-10 text-gray-800">
-        Secure EHR Dashboard
-      </h1>
-
-      <StatsCards
-        patients={patients}
-        records={records.length}
-      />
-
-      <RecordGrowthChart records={records} />
-
-      <BlockchainActivity />
-
-      <BlockchainNetworkGraph records={records} />
-
-      <LiveTransactionFeed />
-
+      {loading ? (
+        <div className="flex items-center gap-2 text-[color:var(--text-secondary)] mt-10">
+          <span className="spinner"></span> Loading dashboard…
+        </div>
+      ) : (
+        <>
+          <StatsCards
+            patients={stats.patients}
+            records={stats.records}
+            doctors={stats.doctors}
+          />
+          <RecordGrowthChart records={stats.records} />
+          <BlockchainActivity />
+          <BlockchainNetworkGraph records={records} />
+          <LiveTransactionFeed />
+        </>
+      )}
     </div>
-
   );
 }
 

@@ -6,13 +6,13 @@ function HeroBanner() {
 
       {/* Background animated circles */}
       <motion.div
-        className="absolute w-72 h-72 bg-white/10 rounded-full top-[-80px] right-[-80px]"
+        className="absolute w-72 h-72 bg-[color:var(--bg-card)]/10 rounded-full top-[-80px] right-[-80px]"
         animate={{ scale: [1, 1.2, 1] }}
         transition={{ repeat: Infinity, duration: 6 }}
       />
 
       <motion.div
-        className="absolute w-48 h-48 bg-white/10 rounded-full bottom-[-60px] left-[-60px]"
+        className="absolute w-48 h-48 bg-[color:var(--bg-card)]/10 rounded-full bottom-[-60px] left-[-60px]"
         animate={{ scale: [1, 1.3, 1] }}
         transition={{ repeat: Infinity, duration: 5 }}
       />

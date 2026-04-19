@@ -6,7 +6,7 @@ function BlockchainNetworkGraph({ records = [] }) {
 
   return (
 
-    <div className="bg-white p-6 rounded-xl shadow-md mt-6">
+    <div className="bg-[color:var(--bg-card)] p-6 rounded-xl shadow-md mt-6">
 
       <h2 className="text-lg font-semibold mb-4">
         Blockchain Visualization
@@ -31,7 +31,7 @@ function BlockchainNetworkGraph({ records = [] }) {
             className="min-w-[170px] bg-gray-900 text-white rounded-lg p-4 flex flex-col items-center shadow-lg relative"
           >
 
-            <div className="text-xs text-gray-400">
+            <div className="text-xs text-[color:var(--text-secondary)]">
               Block
             </div>
 
@@ -39,7 +39,7 @@ function BlockchainNetworkGraph({ records = [] }) {
               #{block.record_id}
             </div>
 
-            <div className="text-xs mt-2 text-gray-400">
+            <div className="text-xs mt-2 text-[color:var(--text-secondary)]">
               Patient
             </div>
 

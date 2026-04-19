@@ -15,13 +15,13 @@ function TamperSimulation() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md mt-6">
+    <div className="bg-[color:var(--bg-card)] p-6 rounded-xl shadow-md mt-6">
 
       <h2 className="text-lg font-semibold mb-4">
         Tamper Simulation
       </h2>
 
-      <p className="text-sm text-gray-500 mb-4">
+      <p className="text-sm text-[color:var(--text-secondary)] mb-4">
         Demonstrate how blockchain detects unauthorized record changes.
       </p>
 

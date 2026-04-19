@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../../api";
 
 function SystemHealth() {
 
@@ -14,7 +14,7 @@ function SystemHealth() {
   const checkSystems = async () => {
     try {
 
-      const res = await axios.get("http://127.0.0.1:5000/");
+      const res = await API.get("/");
 
       if (res.data) {
         setApiStatus("Running");
@@ -40,7 +40,7 @@ function SystemHealth() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md mt-6">
+    <div className="bg-[color:var(--bg-card)] p-6 rounded-xl shadow-md mt-6">
 
       <h2 className="text-lg font-semibold mb-4">
         System Health

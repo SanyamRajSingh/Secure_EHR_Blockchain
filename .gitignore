@@ -1,0 +1,13 @@
+backend/venv/
+backend/venv_win/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+venv*/
+frontend/ehr-frontend/node_modules/
+node_modules/
+.DS_Store

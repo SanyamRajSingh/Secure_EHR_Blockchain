@@ -2,9 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ehr-frontend</title>
+    <title>Vite + React</title>
+    <script>
+      (function() {
+        var t = localStorage.getItem('ehr-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+    <style id="page-transition-style">
+      .page-wrapper { opacity: 0; }
+    </style>
   </head>
   <body>
     <div id="root"></div>

@@ -11,7 +11,7 @@ function RecordGrowthChart({ records }) {
   ];
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md mt-6">
+    <div className="bg-[color:var(--bg-card)] p-6 rounded-xl shadow-md mt-6">
       <h2 className="text-lg font-semibold mb-4">
         Medical Records Growth
       </h2>
